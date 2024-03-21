@@ -9,7 +9,7 @@ class ChatService {
   late final String _apiKey;
 
   // init
-  ChatService() {
+  ChatService(Dio dio) {
     var env = DotEnv(includePlatformEnvironment: true)..load(['.env']);
     _apiKey = env['CHAT_GPT_API_KEY'] ?? '';
   }
