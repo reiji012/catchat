@@ -1,10 +1,14 @@
-import 'package:catchat/front/pages/chat_page.dart';
+import 'package:catchat/front/pages/chat_page/chat_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'front/pages/select_page.dart'; // SelectPageをインポート
 import 'front/pages/start.dart'; // StartPageをインポート
+import 'package:catchat/config/development.dart'; // 開発環境用の設定をインポート
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
