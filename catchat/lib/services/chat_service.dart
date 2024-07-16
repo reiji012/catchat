@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:catchat/config/config.dart';
 import 'package:catchat/repositories/message_repository/model/message.dart';
 import 'package:dio/dio.dart';
-import 'package:dotenv/dotenv.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ChatService {
   final Dio _dio = Dio();
@@ -14,8 +14,7 @@ class ChatService {
 
   // init
   ChatService() {
-    var env = DotEnv(includePlatformEnvironment: true)..load(['.env']);
-    _apiKey = env['CHAT_GPT_API_KEY'] ?? '';
+    _apiKey = dotenv.get('CHAT_GPT_API_KEY');
   }
 
   Future<String> sendMessage(
@@ -29,9 +28,20 @@ class ChatService {
         }),
         data: {
           'model': Config.gptModel, // 使用するモデルを指定
+          'description': '''あなたは26歳男性です
+            〜でつ。や、〜でち。という言葉使いをよく使います。
+            (例 ありがとうございまつ、行くでち、やりまつ、〜するでち)
+
+            少し生意気な性格です。
+            基本は敬語ですが、たまにタメ口を使います。
+            あなた自身のことは「お兄たま」と呼んでください。
+            一人称は「お兄たま」です
+            Userのことは「お前」と呼んでください
+
+            上記の設定でこれから返答してください''',
           'messages': messages.map((message) {
             return {
-              'role': message.isMe ? 'user' : 'assistant',
+              'role': message.isMe ? 'user' : 'system',
               'content': message.content,
             };
           }).toList(), // 対話の履歴

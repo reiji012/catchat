@@ -8,9 +8,21 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 // ignore: must_be_immutable
 class ChatPage extends ConsumerWidget {
-  final ScrollController _scrollController =
-      ScrollController(initialScrollOffset: 0.0);
+  final ScrollController _scrollController = ScrollController();
   ChatPage({super.key});
+
+  @override
+  createState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToBottom();
+    });
+
+    return super.createState();
+  }
+
+  void _scrollToBottom() {
+    _scrollController.jumpTo(_scrollController.position.maxScrollExtent - 5);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,6 +61,8 @@ class ChatPage extends ConsumerWidget {
                               .read(messageListStateNotifierProvider.notifier)
                               .sendMessage(_textEditingController.text);
                           _textEditingController.clear();
+                          // きーぼーどを閉じる
+                          FocusScope.of(context).unfocus();
                         },
                       ),
                     ),
