@@ -11,14 +11,14 @@ class ChatPage extends ConsumerWidget {
   final ScrollController _scrollController = ScrollController();
   ChatPage({super.key});
 
-  @override
-  createState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollToBottom();
-    });
+  // @override
+  // ConsumerStatefulElement createElement() {
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     _scrollToBottom();
+  //   });
 
-    return super.createState();
-  }
+  //   return super.createElement();
+  // }
 
   void _scrollToBottom() {
     _scrollController.jumpTo(_scrollController.position.maxScrollExtent - 5);
@@ -32,8 +32,15 @@ class ChatPage extends ConsumerWidget {
     final messages = messageListState.messageList;
     TextEditingController _textEditingController = TextEditingController();
 
+    // メッセージリストが更新されるたびにスクロールを一番下に移動
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!isLoading) {
+        _scrollToBottom();
+      }
+    });
+
     return Scaffold(
-      appBar: AppBar(title: Text("チャット")),
+      appBar: AppBar(title: Text("とらまるとお話し")),
       body: isLoading
           ? loading()
           : Column(
@@ -63,6 +70,13 @@ class ChatPage extends ConsumerWidget {
                           _textEditingController.clear();
                           // きーぼーどを閉じる
                           FocusScope.of(context).unfocus();
+
+                          // アニメーション付きでスクロールの最下部に移動
+                          _scrollController.animateTo(
+                            _scrollController.position.maxScrollExtent,
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.easeOut,
+                          );
                         },
                       ),
                     ),
@@ -75,7 +89,9 @@ class ChatPage extends ConsumerWidget {
 
   Widget buildMessageTile(MessageModel message) {
     return ListTile(
-      leading: message.isMe ? null : CircleAvatar(child: Icon(Icons.person)),
+      leading: message.isMe
+          ? null
+          : CircleAvatar(child: Image.asset("assets/images/cats/image.png")),
       title: Align(
         alignment: message.isMe ? Alignment.centerRight : Alignment.centerLeft,
         child: Container(

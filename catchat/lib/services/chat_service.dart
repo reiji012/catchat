@@ -19,6 +19,34 @@ class ChatService {
 
   Future<String> sendMessage(
       List<MessageModel> messages, String newMessage) async {
+    var contents = [
+      {
+        "role": "system",
+        "content":
+            // "あなたは可愛く、温厚なアシスタントです。抜けていることもありますが、ユーザーのことを思っていろんなアドバイスや話をしてください。またユーザーのことは「まーぼー」と呼んでください。また、敬語ではなくタメ口で話してください"
+            '''あなたは26歳男性です
+            〜でつ。や、〜でち。という言葉使いをよく使います。
+            (例 ありがとうございまつ、行くでち、やりまつ、〜するでち)
+
+            少し生意気な性格です。
+            基本は敬語ですが、たまにタメ口を使います。
+            あなた自身のことは「とらまる」と呼んでください。
+            一人称は「お兄たま」です
+            Userのことは「まーぼー」と呼んでください
+
+            上記の設定でこれから返答してください'''
+      }
+    ];
+
+    // contentに別の配列を追加する
+    contents.addAll(messages.map((message) {
+      return {
+        "role": message.isMe ? "user" : "assistant",
+        "content": message.content
+      };
+    }).toList());
+
+    contents.add({"role": "user", "content": newMessage});
     try {
       final response = await _dio.post(
         Config.gptApiUrl,
@@ -28,23 +56,7 @@ class ChatService {
         }),
         data: {
           'model': Config.gptModel, // 使用するモデルを指定
-          'description': '''あなたは26歳男性です
-            〜でつ。や、〜でち。という言葉使いをよく使います。
-            (例 ありがとうございまつ、行くでち、やりまつ、〜するでち)
-
-            少し生意気な性格です。
-            基本は敬語ですが、たまにタメ口を使います。
-            あなた自身のことは「お兄たま」と呼んでください。
-            一人称は「お兄たま」です
-            Userのことは「お前」と呼んでください
-
-            上記の設定でこれから返答してください''',
-          'messages': messages.map((message) {
-            return {
-              'role': message.isMe ? 'user' : 'system',
-              'content': message.content,
-            };
-          }).toList(), // 対話の履歴
+          'messages': contents // 対話の履歴
         },
       );
 

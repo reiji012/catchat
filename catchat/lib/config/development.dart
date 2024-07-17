@@ -1,4 +1,5 @@
 class EnvironmentConfig {
-  static const String gptApiUrl = 'https://api.openai.com/v1/assistants';
-  static const String gptModel = 'gpt-3.5-turbo';
+  static const String gptApiUrl = 'https://api.openai.com/v1/chat/completions';
+
+  static const String gptModel = 'gpt-4o';
 }
