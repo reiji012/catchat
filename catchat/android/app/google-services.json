@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "415087354726",
+    "project_id": "nyat-7caeb",
+    "storage_bucket": "nyat-7caeb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:415087354726:android:0d5a6e52bb051a79c35ea7",
+        "android_client_info": {
+          "package_name": "com.matsu.nyat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNPjdXls7H_GIzXD_7Q6MllitZm8lz18g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
