@@ -1,4 +1,5 @@
 import 'package:catchat/front/pages/chat_page/chat_page.dart';
+import 'package:catchat/front/theme/theme_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,7 +23,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Catchat',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        appBarTheme: AppBarTheme(
+          centerTitle: true,
+          backgroundColor: Color(NyatColors.backgroundColor),
+        ),
+        primaryColor: Color(NyatColors.backgroundColor),
+        primaryTextTheme: ThemeData.light().textTheme.copyWith(
+              bodyMedium: TextStyle(color: Colors.white),
+            ),
       ),
       home: const StartPage(title: 'Catchat Home Page'),
       routes: {
