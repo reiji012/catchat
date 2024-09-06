@@ -15,7 +15,6 @@ class MessageRepository {
     final messages = [
       MessageModel(content: "こんにちは！", isMe: true),
       MessageModel(content: "こんにちは、何かようでち？", isMe: false),
-      // ここにメッセージを追加...
     ];
 
     return messages;

@@ -40,52 +40,77 @@ class ChatPage extends ConsumerWidget {
       }
     });
 
-    return Scaffold(
-      backgroundColor: Color(NyatColors.backgroundColor),
-      appBar: AppBar(title: Text("とらまるとお話し")),
-      body: isLoading
-          ? loading()
-          : Column(
-              children: <Widget>[
-                Expanded(
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    itemCount: messages.length,
-                    itemBuilder: (context, index) {
-                      final message = messages[index];
-                      return buildMessageTile(message); // メッセージタイルを構築するメソッド
-                    },
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage("assets/images/background/backgroud.png"),
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+          leading: Container(
+            margin: EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white.withOpacity(0.8),
+            ),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+        ),
+        body: isLoading
+            ? loading()
+            : Column(
+                children: <Widget>[
+                  Expanded(
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      itemCount: messages.length,
+                      itemBuilder: (context, index) {
+                        final message = messages[index];
+                        return buildMessageTile(message); // メッセージタイルを構築するメソッド
+                      },
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    controller: _textEditingController,
-                    decoration: InputDecoration(
-                      hintText: "メッセージを入力...",
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.send),
-                        onPressed: () {
-                          ref
-                              .read(messageListStateNotifierProvider.notifier)
-                              .sendMessage(_textEditingController.text);
-                          _textEditingController.clear();
-                          // きーぼーどを閉じる
-                          FocusScope.of(context).unfocus();
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: _textEditingController,
+                      decoration: InputDecoration(
+                        fillColor: Colors.transparent,
+                        hintText: "メッセージを入力...",
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.send),
+                          onPressed: () {
+                            ref
+                                .read(messageListStateNotifierProvider.notifier)
+                                .sendMessage(_textEditingController.text);
+                            _textEditingController.clear();
+                            // きーぼーどを閉じる
+                            FocusScope.of(context).unfocus();
 
-                          // アニメーション付きでスクロールの最下部に移動
-                          _scrollController.animateTo(
-                            _scrollController.position.maxScrollExtent,
-                            duration: Duration(milliseconds: 300),
-                            curve: Curves.easeOut,
-                          );
-                        },
+                            // アニメーション付きでスクロールの最下部に移動
+                            _scrollController.animateTo(
+                              _scrollController.position.maxScrollExtent,
+                              duration: Duration(milliseconds: 300),
+                              curve: Curves.easeOut,
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+      ),
     );
   }
 
@@ -96,10 +121,10 @@ class ChatPage extends ConsumerWidget {
           : CircleAvatar(
               child: ClipOval(
                 child: Image.asset(
-                  "assets/images/cats/image.png",
-                  fit: BoxFit.cover,
-                  width: 40.0, // CircleAvatarのサイズに合わせる
-                  height: 40.0, // CircleAvatarのサイズに合わせる
+                  "assets/images/cats/cat2.png",
+                  fit: BoxFit.fill,
+                  width: 100.0, // CircleAvatarのサイズに合わせる
+                  height: 100.0, // CircleAvatarのサイズに合わせる
                 ),
               ),
             ),
