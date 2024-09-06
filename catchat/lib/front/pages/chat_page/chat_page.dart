@@ -47,69 +47,118 @@ class ChatPage extends ConsumerWidget {
           image: AssetImage("assets/images/background/backgroud.png"),
         ),
       ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          leading: Container(
-            margin: EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white.withOpacity(0.8),
-            ),
-            child: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-        ),
-        body: isLoading
-            ? loading()
-            : Column(
-                children: <Widget>[
-                  Expanded(
-                    child: ListView.builder(
-                      controller: _scrollController,
-                      itemCount: messages.length,
-                      itemBuilder: (context, index) {
-                        final message = messages[index];
-                        return buildMessageTile(message); // メッセージタイルを構築するメソッド
-                      },
+      child: Stack(
+        children: [
+          Column(
+            verticalDirection: VerticalDirection.up,
+            children: [
+              Container(),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.5,
+                margin: EdgeInsets.only(bottom: 80.0),
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.fitHeight,
+                    image: AssetImage(
+                      "assets/images/cats/cat2.png",
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      controller: _textEditingController,
-                      decoration: InputDecoration(
-                        fillColor: Colors.transparent,
-                        hintText: "メッセージを入力...",
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.send),
-                          onPressed: () {
-                            ref
-                                .read(messageListStateNotifierProvider.notifier)
-                                .sendMessage(_textEditingController.text);
-                            _textEditingController.clear();
-                            // きーぼーどを閉じる
-                            FocusScope.of(context).unfocus();
-
-                            // アニメーション付きでスクロールの最下部に移動
-                            _scrollController.animateTo(
-                              _scrollController.position.maxScrollExtent,
-                              duration: Duration(milliseconds: 300),
-                              curve: Curves.easeOut,
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
+            ],
+          ),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              automaticallyImplyLeading: false,
+              leading: Container(
+                margin: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white.withOpacity(0.8),
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ),
+            body: isLoading
+                ? loading()
+                : Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      // Column(
+                      //   verticalDirection: VerticalDirection.up,
+                      //   children: [
+                      //     Container(),
+                      //     Container(
+                      //       height: MediaQuery.of(context).size.height * 0.5,
+                      //       margin: EdgeInsets.only(bottom: 80.0),
+                      //       decoration: const BoxDecoration(
+                      //         image: DecorationImage(
+                      //           fit: BoxFit.fitHeight,
+                      //           image: AssetImage(
+                      //             "assets/images/cats/cat2.png",
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      Column(
+                        children: <Widget>[
+                          Expanded(
+                            child: ListView.builder(
+                              controller: _scrollController,
+                              itemCount: messages.length,
+                              itemBuilder: (context, index) {
+                                final message = messages[index];
+                                return buildMessageTile(
+                                    message); // メッセージタイルを構築するメソッド
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              controller: _textEditingController,
+                              decoration: InputDecoration(
+                                fillColor: Colors.transparent,
+                                hintText: "メッセージを入力...",
+                                suffixIcon: IconButton(
+                                  icon: Icon(Icons.send),
+                                  onPressed: () {
+                                    ref
+                                        .read(messageListStateNotifierProvider
+                                            .notifier)
+                                        .sendMessage(
+                                            _textEditingController.text);
+                                    _textEditingController.clear();
+                                    // きーぼーどを閉じる
+                                    FocusScope.of(context).unfocus();
+
+                                    // アニメーション付きでスクロールの最下部に移動
+                                    _scrollController.animateTo(
+                                      _scrollController
+                                          .position.maxScrollExtent,
+                                      duration: Duration(milliseconds: 300),
+                                      curve: Curves.easeOut,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+          ),
+        ],
       ),
     );
   }
