@@ -68,6 +68,7 @@ class ChatPage extends ConsumerWidget {
             ],
           ),
           Scaffold(
+            extendBodyBehindAppBar: true,
             backgroundColor: Colors.transparent,
             appBar: AppBar(
               backgroundColor: Colors.transparent,
@@ -196,7 +197,7 @@ class ChatPage extends ConsumerWidget {
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.2),
+                color: Colors.black.withOpacity(0.5),
                 spreadRadius: 1,
                 blurRadius: 5,
                 offset: Offset(0, 3), // 影の位置を調整

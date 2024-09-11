@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
               bodyMedium: TextStyle(color: Colors.white),
             ),
       ),
-      home: const StartPage(title: 'Catchat Home Page'),
+      home: const SelectPage(),
       routes: {
         '/select': (context) => const SelectPage(), // SelectPageへのルートを定義
         '/chat': (context) => ChatPage(), // ChatPageへのルートを定義
