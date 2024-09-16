@@ -20,8 +20,10 @@ class MessageRepository {
           .then((value) {
         print("MessageRepository: FireStoreを取得できました");
         print("value: ${value}");
-        messages =
-            value.docs.map((e) => MessageModel.fromJson(e.data())).toList();
+        messages = value.docs
+            .map((e) => MessageModel.fromJson(e.data()))
+            .toList()
+          ..sort((a, b) => a.sendDate!.compareTo(b.sendDate!));
       });
       print("MessageModel: ${messages}");
       return messages;
