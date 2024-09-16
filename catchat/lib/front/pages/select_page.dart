@@ -30,12 +30,15 @@ class SelectPage extends StatelessWidget {
           Container(
             height: 40,
           ),
-          ElevatedButton(
-            onPressed: () {
-              // 決定ボタンの処理をここに書く
-              Navigator.pushNamed(context, '/chat');
-            },
-            child: Text('お話しする'),
+          Container(
+            width: 200,
+            child: ElevatedButton(
+              onPressed: () {
+                // 決定ボタンの処理をここに書く
+                Navigator.pushNamed(context, '/chat');
+              },
+              child: Text('お話しする'),
+            ),
           ),
           Container(
             height: 40,
@@ -45,7 +48,7 @@ class SelectPage extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {
                 // 決定ボタンの処理をここに書く
-                Navigator.pushNamed(context, '/chat');
+                Navigator.pushNamed(context, '/char_settings');
               },
               child: Text('お着替えする'),
             ),

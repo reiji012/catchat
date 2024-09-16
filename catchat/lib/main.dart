@@ -1,3 +1,4 @@
+import 'package:catchat/front/pages/char_settings/char_settings_page.dart';
 import 'package:catchat/front/pages/chat_page/chat_page.dart';
 import 'package:catchat/front/theme/theme_color.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Catchat',
       theme: ThemeData(
+        scaffoldBackgroundColor: Color(NyatColors.backgroundColor),
         appBarTheme: AppBarTheme(
           centerTitle: true,
           backgroundColor: Color(NyatColors.backgroundColor),
@@ -38,6 +40,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/select': (context) => const SelectPage(), // SelectPageへのルートを定義
         '/chat': (context) => ChatPage(), // ChatPageへのルートを定義
+        '/char_settings': (context) =>
+            CharSettingsPage(), // CharSettingsPageへのルートを定義
       },
     );
   }

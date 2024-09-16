@@ -40,126 +40,131 @@ class ChatPage extends ConsumerWidget {
       }
     });
 
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: AssetImage("assets/images/background/backgroud.png"),
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          color: Color(NyatColors.backgroundColor),
         ),
-      ),
-      child: Stack(
-        children: [
-          Column(
-            verticalDirection: VerticalDirection.up,
-            children: [
-              Container(),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.5,
-                margin: EdgeInsets.only(bottom: 80.0),
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.fitHeight,
-                    image: AssetImage(
-                      "assets/images/cats/cat2.png",
+        child: Stack(
+          children: [
+            Column(
+              verticalDirection: VerticalDirection.up,
+              children: [
+                Container(),
+              ],
+            ),
+            Scaffold(
+              extendBodyBehindAppBar: true,
+              backgroundColor: Colors.transparent,
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                automaticallyImplyLeading: false,
+                actions: [
+                  Container(
+                    margin: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withOpacity(0.8),
                     ),
+                    child: IconButton(
+                      icon: Icon(Icons.av_timer_outlined),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                ],
+                leading: Container(
+                  margin: EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white.withOpacity(0.8),
+                  ),
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
                 ),
               ),
-            ],
-          ),
-          Scaffold(
-            extendBodyBehindAppBar: true,
-            backgroundColor: Colors.transparent,
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              automaticallyImplyLeading: false,
-              leading: Container(
-                margin: EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(0.8),
-                ),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ),
-            body: isLoading
-                ? loading()
-                : Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      // Column(
-                      //   verticalDirection: VerticalDirection.up,
-                      //   children: [
-                      //     Container(),
-                      //     Container(
-                      //       height: MediaQuery.of(context).size.height * 0.5,
-                      //       margin: EdgeInsets.only(bottom: 80.0),
-                      //       decoration: const BoxDecoration(
-                      //         image: DecorationImage(
-                      //           fit: BoxFit.fitHeight,
-                      //           image: AssetImage(
-                      //             "assets/images/cats/cat2.png",
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      Column(
-                        children: <Widget>[
-                          Expanded(
-                            child: ListView.builder(
-                              controller: _scrollController,
-                              itemCount: messages.length,
-                              itemBuilder: (context, index) {
-                                final message = messages[index];
-                                return buildMessageTile(
-                                    message); // メッセージタイルを構築するメソッド
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextField(
-                              controller: _textEditingController,
-                              decoration: InputDecoration(
-                                fillColor: Colors.transparent,
-                                hintText: "メッセージを入力...",
-                                suffixIcon: IconButton(
-                                  icon: Icon(Icons.send),
-                                  onPressed: () {
-                                    ref
-                                        .read(messageListStateNotifierProvider
-                                            .notifier)
-                                        .sendMessage(
-                                            _textEditingController.text);
-                                    _textEditingController.clear();
-                                    // きーぼーどを閉じる
-                                    FocusScope.of(context).unfocus();
-
-                                    // アニメーション付きでスクロールの最下部に移動
-                                    _scrollController.animateTo(
-                                      _scrollController
-                                          .position.maxScrollExtent,
-                                      duration: Duration(milliseconds: 300),
-                                      curve: Curves.easeOut,
-                                    );
+              body: isLoading
+                  ? loading()
+                  : SafeArea(
+                      child: Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          // Column(
+                          //   verticalDirection: VerticalDirection.up,
+                          //   children: [
+                          //     Container(),
+                          //     Container(
+                          //       height: MediaQuery.of(context).size.height * 0.5,
+                          //       margin: EdgeInsets.only(bottom: 80.0),
+                          //       decoration: const BoxDecoration(
+                          //         image: DecorationImage(
+                          //           fit: BoxFit.fitHeight,
+                          //           image: AssetImage(
+                          //             "assets/images/cats/cat2.png",
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                          Column(
+                            children: <Widget>[
+                              Expanded(
+                                child: ListView.builder(
+                                  controller: _scrollController,
+                                  itemCount: messages.length,
+                                  itemBuilder: (context, index) {
+                                    final message = messages[index];
+                                    return buildMessageTile(
+                                        message); // メッセージタイルを構築するメソッド
                                   },
                                 ),
                               ),
-                            ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextField(
+                                  controller: _textEditingController,
+                                  decoration: InputDecoration(
+                                    fillColor: Colors.transparent,
+                                    hintText: "メッセージを入力...",
+                                    suffixIcon: IconButton(
+                                      icon: Icon(Icons.send),
+                                      onPressed: () {
+                                        ref
+                                            .read(
+                                                messageListStateNotifierProvider
+                                                    .notifier)
+                                            .sendMessage(
+                                                _textEditingController.text);
+                                        _textEditingController.clear();
+                                        // きーぼーどを閉じる
+                                        FocusScope.of(context).unfocus();
+
+                                        // アニメーション付きでスクロールの最下部に移動
+                                        _scrollController.animateTo(
+                                          _scrollController
+                                              .position.maxScrollExtent,
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.easeOut,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-          ),
-        ],
+                    ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -201,7 +206,7 @@ class ChatPage extends ConsumerWidget {
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.5),
+                color: Colors.black.withOpacity(0.3),
                 spreadRadius: 1,
                 blurRadius: 5,
                 offset: Offset(0, 3), // 影の位置を調整
