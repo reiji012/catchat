@@ -12,13 +12,13 @@ class MessageListStateNotifier extends StateNotifier<MessageListState> {
 
   void init() async {
     messageRepository = MessageRepository();
-    final messages = await messageRepository.getMessages();
-    state = state.copyWith(messageList: messages, isLoading: false);
+    final List<MessageModel>? messages = await messageRepository.getMessages();
+    state = state.copyWith(messageList: messages ?? [], isLoading: false);
   }
 
   void fetchMessages() async {
-    final messages = await messageRepository.getMessages();
-    state = state.copyWith(messageList: messages);
+    final List<MessageModel>? messages = await messageRepository.getMessages();
+    state = state.copyWith(messageList: messages ?? []);
   }
 
   void readMessage(int index) async {
@@ -34,16 +34,21 @@ class MessageListStateNotifier extends StateNotifier<MessageListState> {
   }
 
   void sendMessage(String content) {
-    final message = MessageModel(content: content, isMe: true);
+    final userMessage =
+        MessageModel(content: content, from: 'user', sendDate: DateTime.now());
     state = state.copyWith(
-      messageList: [...state.messageList, message],
+      messageList: [...state.messageList, userMessage],
     );
 
+    messageRepository.sendMessage(userMessage);
+
     _chatService.sendMessage(state.messageList, content).then((response) {
-      final message = MessageModel(content: response, isMe: false);
+      final responseMessage = MessageModel(
+          content: response, from: 'assistant', sendDate: DateTime.now());
       state = state.copyWith(
-        messageList: [...state.messageList, message],
+        messageList: [...state.messageList, responseMessage],
       );
+      messageRepository.sendMessage(responseMessage);
     });
   }
 }

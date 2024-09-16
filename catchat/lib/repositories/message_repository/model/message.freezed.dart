@@ -21,7 +21,9 @@ MessageModel _$MessageModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$MessageModel {
   String get content => throw _privateConstructorUsedError;
-  bool get isMe => throw _privateConstructorUsedError;
+  String get from => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  DateTime? get sendDate => throw _privateConstructorUsedError;
   bool get isRead => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +38,11 @@ abstract class $MessageModelCopyWith<$Res> {
           MessageModel value, $Res Function(MessageModel) then) =
       _$MessageModelCopyWithImpl<$Res, MessageModel>;
   @useResult
-  $Res call({String content, bool isMe, bool isRead});
+  $Res call(
+      {String content,
+      String from,
+      @TimestampConverter() DateTime? sendDate,
+      bool isRead});
 }
 
 /// @nodoc
@@ -53,7 +59,8 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
   @override
   $Res call({
     Object? content = null,
-    Object? isMe = null,
+    Object? from = null,
+    Object? sendDate = freezed,
     Object? isRead = null,
   }) {
     return _then(_value.copyWith(
@@ -61,10 +68,14 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
-      isMe: null == isMe
-          ? _value.isMe
-          : isMe // ignore: cast_nullable_to_non_nullable
-              as bool,
+      from: null == from
+          ? _value.from
+          : from // ignore: cast_nullable_to_non_nullable
+              as String,
+      sendDate: freezed == sendDate
+          ? _value.sendDate
+          : sendDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       isRead: null == isRead
           ? _value.isRead
           : isRead // ignore: cast_nullable_to_non_nullable
@@ -81,7 +92,11 @@ abstract class _$$MessageModelImplCopyWith<$Res>
       __$$MessageModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String content, bool isMe, bool isRead});
+  $Res call(
+      {String content,
+      String from,
+      @TimestampConverter() DateTime? sendDate,
+      bool isRead});
 }
 
 /// @nodoc
@@ -96,7 +111,8 @@ class __$$MessageModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? content = null,
-    Object? isMe = null,
+    Object? from = null,
+    Object? sendDate = freezed,
     Object? isRead = null,
   }) {
     return _then(_$MessageModelImpl(
@@ -104,10 +120,14 @@ class __$$MessageModelImplCopyWithImpl<$Res>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
-      isMe: null == isMe
-          ? _value.isMe
-          : isMe // ignore: cast_nullable_to_non_nullable
-              as bool,
+      from: null == from
+          ? _value.from
+          : from // ignore: cast_nullable_to_non_nullable
+              as String,
+      sendDate: freezed == sendDate
+          ? _value.sendDate
+          : sendDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       isRead: null == isRead
           ? _value.isRead
           : isRead // ignore: cast_nullable_to_non_nullable
@@ -120,7 +140,10 @@ class __$$MessageModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$MessageModelImpl with DiagnosticableTreeMixin implements _MessageModel {
   const _$MessageModelImpl(
-      {required this.content, required this.isMe, this.isRead = false});
+      {required this.content,
+      required this.from,
+      @TimestampConverter() this.sendDate,
+      this.isRead = false});
 
   factory _$MessageModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$MessageModelImplFromJson(json);
@@ -128,14 +151,17 @@ class _$MessageModelImpl with DiagnosticableTreeMixin implements _MessageModel {
   @override
   final String content;
   @override
-  final bool isMe;
+  final String from;
+  @override
+  @TimestampConverter()
+  final DateTime? sendDate;
   @override
   @JsonKey()
   final bool isRead;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MessageModel(content: $content, isMe: $isMe, isRead: $isRead)';
+    return 'MessageModel(content: $content, from: $from, sendDate: $sendDate, isRead: $isRead)';
   }
 
   @override
@@ -144,7 +170,8 @@ class _$MessageModelImpl with DiagnosticableTreeMixin implements _MessageModel {
     properties
       ..add(DiagnosticsProperty('type', 'MessageModel'))
       ..add(DiagnosticsProperty('content', content))
-      ..add(DiagnosticsProperty('isMe', isMe))
+      ..add(DiagnosticsProperty('from', from))
+      ..add(DiagnosticsProperty('sendDate', sendDate))
       ..add(DiagnosticsProperty('isRead', isRead));
   }
 
@@ -154,13 +181,15 @@ class _$MessageModelImpl with DiagnosticableTreeMixin implements _MessageModel {
         (other.runtimeType == runtimeType &&
             other is _$MessageModelImpl &&
             (identical(other.content, content) || other.content == content) &&
-            (identical(other.isMe, isMe) || other.isMe == isMe) &&
+            (identical(other.from, from) || other.from == from) &&
+            (identical(other.sendDate, sendDate) ||
+                other.sendDate == sendDate) &&
             (identical(other.isRead, isRead) || other.isRead == isRead));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, content, isMe, isRead);
+  int get hashCode => Object.hash(runtimeType, content, from, sendDate, isRead);
 
   @JsonKey(ignore: true)
   @override
@@ -179,7 +208,8 @@ class _$MessageModelImpl with DiagnosticableTreeMixin implements _MessageModel {
 abstract class _MessageModel implements MessageModel {
   const factory _MessageModel(
       {required final String content,
-      required final bool isMe,
+      required final String from,
+      @TimestampConverter() final DateTime? sendDate,
       final bool isRead}) = _$MessageModelImpl;
 
   factory _MessageModel.fromJson(Map<String, dynamic> json) =
@@ -188,7 +218,10 @@ abstract class _MessageModel implements MessageModel {
   @override
   String get content;
   @override
-  bool get isMe;
+  String get from;
+  @override
+  @TimestampConverter()
+  DateTime? get sendDate;
   @override
   bool get isRead;
   @override

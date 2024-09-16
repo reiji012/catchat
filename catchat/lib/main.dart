@@ -1,5 +1,6 @@
 import 'package:catchat/front/pages/chat_page/chat_page.dart';
 import 'package:catchat/front/theme/theme_color.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,6 +10,7 @@ import 'package:catchat/config/development.dart'; // 開発環境用の設定を
 
 void main() async {
   await dotenv.load(fileName: '.env');
+  await Firebase.initializeApp();
 
   runApp(const ProviderScope(
     child: MyApp(),

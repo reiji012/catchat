@@ -47,10 +47,7 @@ class ChatService {
 
     // contentに別の配列を追加する
     contents.addAll(messages.map((message) {
-      return {
-        "role": message.isMe ? "user" : "assistant",
-        "content": message.content
-      };
+      return {"role": message.from, "content": message.content};
     }).toList());
 
     contents.add({"role": "user", "content": newMessage});

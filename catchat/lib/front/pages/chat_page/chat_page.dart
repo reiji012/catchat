@@ -166,7 +166,7 @@ class ChatPage extends ConsumerWidget {
 
   Widget buildMessageTile(MessageModel message) {
     return ListTile(
-      leading: message.isMe
+      leading: message.from == "user"
           ? null
           : CircleAvatar(
               child: ClipOval(
@@ -179,21 +179,25 @@ class ChatPage extends ConsumerWidget {
               ),
             ),
       title: Align(
-        alignment: message.isMe ? Alignment.centerRight : Alignment.centerLeft,
+        alignment: message.from == 'user'
+            ? Alignment.centerRight
+            : Alignment.centerLeft,
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
           padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
           decoration: BoxDecoration(
-            color: message.isMe
+            color: message.from == 'user'
                 ? Color(NyatColors.userChatBubbleColor)
                 : Color(NyatColors.aiChatBubbleColor),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20.0),
               topRight: Radius.circular(20.0),
-              bottomLeft:
-                  message.isMe ? Radius.circular(20.0) : Radius.circular(0),
-              bottomRight:
-                  message.isMe ? Radius.circular(0) : Radius.circular(20.0),
+              bottomLeft: message.from == 'user'
+                  ? Radius.circular(20.0)
+                  : Radius.circular(0),
+              bottomRight: message.from == 'user'
+                  ? Radius.circular(0)
+                  : Radius.circular(20.0),
             ),
             boxShadow: [
               BoxShadow(
@@ -207,7 +211,7 @@ class ChatPage extends ConsumerWidget {
           child: Text(
             message.content,
             style: TextStyle(
-              color: message.isMe ? Colors.white : Colors.black,
+              color: message.from == 'user' ? Colors.white : Colors.black,
             ),
           ),
         ),
