@@ -19,6 +19,13 @@ class ChatService {
 
   Future<String> sendMessage(
       List<MessageModel> messages, String newMessage) async {
+    final userName = "まーぼー";
+    final assistantName = "とらまる";
+
+    final userBirthDate = '2021年1月1日';
+    final userHobby = 'ゲーム、アニメ、読書';
+    final lastChatDate = '2021年1月1日';
+
     var contents = [
       {
         "role": "system",
@@ -30,17 +37,17 @@ class ChatService {
 
             少し生意気な性格です。
             基本は敬語ですが、たまにタメ口を使います。
-            あなた自身のことは「とらまる」と呼んでください。
-            一人称は「とらまる」です
-            Userのことは「まーぼー」と呼んでください
+            あなた自身のことは「$assistantName」と呼んでください。
+            一人称は「$assistantName」です
+            Userのことは「$userName」と呼んでください
 
             上記の設定でこれから返答してください
             
 
             ## ユーザー情報
-            誕生日:2021年1月1日
-            趣味:ゲーム、アニメ、読書
-            最後にチャットした日付:2021年1月1日
+            誕生日:$userBirthDate
+            趣味:$userHobby
+            最後にチャットした日付:$lastChatDate
             '''
       }
     ];
