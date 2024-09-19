@@ -12,15 +12,6 @@ class ChatPage extends ConsumerWidget {
   final ScrollController _scrollController = ScrollController();
   ChatPage({super.key});
 
-  // @override
-  // ConsumerStatefulElement createElement() {
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     _scrollToBottom();
-  //   });
-
-  //   return super.createElement();
-  // }
-
   void _scrollToBottom() {
     _scrollController.jumpTo(_scrollController.position.maxScrollExtent - 5);
   }
