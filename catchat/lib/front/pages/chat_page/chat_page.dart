@@ -85,24 +85,6 @@ class ChatPage extends ConsumerWidget {
                       child: Stack(
                         alignment: Alignment.bottomCenter,
                         children: [
-                          // Column(
-                          //   verticalDirection: VerticalDirection.up,
-                          //   children: [
-                          //     Container(),
-                          //     Container(
-                          //       height: MediaQuery.of(context).size.height * 0.5,
-                          //       margin: EdgeInsets.only(bottom: 80.0),
-                          //       decoration: const BoxDecoration(
-                          //         image: DecorationImage(
-                          //           fit: BoxFit.fitHeight,
-                          //           image: AssetImage(
-                          //             "assets/images/cats/cat2.png",
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
                           Column(
                             children: <Widget>[
                               Expanded(
