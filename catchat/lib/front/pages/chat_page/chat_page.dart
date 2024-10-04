@@ -100,34 +100,59 @@ class ChatPage extends ConsumerWidget {
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextField(
-                                  controller: _textEditingController,
-                                  decoration: InputDecoration(
-                                    fillColor: Colors.transparent,
-                                    hintText: "メッセージを入力...",
-                                    suffixIcon: IconButton(
-                                      icon: Icon(Icons.send),
-                                      onPressed: () {
-                                        ref
-                                            .read(
-                                                messageListStateNotifierProvider
-                                                    .notifier)
-                                            .sendMessage(
-                                                _textEditingController.text);
-                                        _textEditingController.clear();
-                                        // きーぼーどを閉じる
-                                        FocusScope.of(context).unfocus();
-
-                                        // アニメーション付きでスクロールの最下部に移動
-                                        _scrollController.animateTo(
-                                          _scrollController
-                                              .position.maxScrollExtent,
-                                          duration: Duration(milliseconds: 300),
-                                          curve: Curves.easeOut,
-                                        );
-                                      },
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 16),
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[200],
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                        ),
+                                        child: TextField(
+                                          decoration: InputDecoration(
+                                            hintText: 'メッセージを入力',
+                                            border: InputBorder.none,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    SizedBox(width: 4),
+                                    Container(
+                                      padding: EdgeInsets.all(1),
+                                      decoration: BoxDecoration(
+                                        color: Color(
+                                            NyatColors.userChatBubbleColor),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: IconButton(
+                                        icon: Icon(Icons.send,
+                                            color: Colors.white),
+                                        onPressed: () {
+                                          ref
+                                              .read(
+                                                  messageListStateNotifierProvider
+                                                      .notifier)
+                                              .sendMessage(
+                                                  _textEditingController.text);
+                                          _textEditingController.clear();
+                                          // きーぼーどを閉じる
+                                          FocusScope.of(context).unfocus();
+
+                                          // アニメーション付きでスクロールの最下部に移動
+                                          _scrollController.animateTo(
+                                            _scrollController
+                                                .position.maxScrollExtent,
+                                            duration:
+                                                Duration(milliseconds: 300),
+                                            curve: Curves.easeOut,
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
