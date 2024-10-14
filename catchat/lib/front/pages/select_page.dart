@@ -20,7 +20,7 @@ class SelectPage extends StatelessWidget {
                 image: DecorationImage(
                   fit: BoxFit.fitHeight,
                   image: AssetImage(
-                    'assets/images/cats/cat2.png',
+                    'assets/images/cats/cat9.png',
                   ), // 画像のパスを指定
                 ),
                 borderRadius: BorderRadius.circular(10.0),

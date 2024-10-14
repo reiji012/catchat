@@ -1,3 +1,5 @@
+import 'package:catchat/front/pages/char_settings/widets/item_selecter.dart';
+import 'package:catchat/front/pages/char_settings/widets/visual_selecter.dart';
 import 'package:catchat/front/theme/theme_color.dart';
 import 'package:catchat/repositories/message_repository/model/message.dart';
 import 'package:catchat/state/massage_list/message_list_state.dart';
@@ -16,10 +18,8 @@ class CharSettingsPage extends ConsumerStatefulWidget {
   _CharSettingsPageState createState() => _CharSettingsPageState();
 }
 
-class _CharSettingsPageState extends ConsumerState<CharSettingsPage>
-    with TickerProviderStateMixin {
+class _CharSettingsPageState extends ConsumerState<CharSettingsPage> {
   final ScrollController _scrollController = ScrollController();
-  late TabController _tabController;
 
   @override
   void initState() {
@@ -29,7 +29,6 @@ class _CharSettingsPageState extends ConsumerState<CharSettingsPage>
 
   @override
   Widget build(BuildContext context) {
-    _tabController = TabController(length: 3, vsync: this);
     final Size size = MediaQuery.of(context).size;
 
     TextEditingController _textEditingController = TextEditingController();
@@ -72,25 +71,69 @@ class _CharSettingsPageState extends ConsumerState<CharSettingsPage>
           Container(
             height: 40,
           ),
-          TabBar(
-            controller: _tabController,
-            tabs: const <Widget>[
-              Tab(icon: Icon(Icons.cloud_outlined)),
-              Tab(icon: Icon(Icons.beach_access_sharp)),
-              Tab(icon: Icon(Icons.brightness_5_sharp)),
-            ],
-          ),
-          Expanded(
-            flex: 1,
-            child: TabBarView(
-              controller: _tabController,
-              children: <Widget>[
-                _gridView(),
-                _gridView(),
-                _gridView(),
-              ],
+          Container(
+            width: 200,
+            child: ElevatedButton(
+              onPressed: () {
+                // 決定ボタンの処理をここに書く
+                showModalBottomSheet(
+                    //モーダルの背景の色、透過
+                    backgroundColor: Colors.transparent,
+                    //ドラッグ可能にする（高さもハーフサイズからフルサイズになる様子）
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Container(
+                          margin: EdgeInsets.only(top: 64),
+                          decoration: BoxDecoration(
+                            //モーダル自体の色
+                            color: Colors.white,
+                            //角丸にする
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                          ),
+                          child: VisualSelecter());
+                    });
+              },
+              child: Text('見た目を変える'),
             ),
-          )
+          ),
+          Container(
+            height: 40,
+          ),
+          Container(
+            width: 200,
+            child: ElevatedButton(
+              onPressed: () {
+                // 決定ボタンの処理をここに書く
+                showModalBottomSheet(
+                    //モーダルの背景の色、透過
+                    backgroundColor: Colors.transparent,
+                    //ドラッグ可能にする（高さもハーフサイズからフルサイズになる様子）
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Container(
+                        margin: EdgeInsets.only(top: 64),
+                        decoration: BoxDecoration(
+                          //モーダル自体の色
+                          color: Colors.white,
+                          //角丸にする
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        child: Container(),
+                      );
+                    });
+              },
+              child: Text('性格を変える'),
+            ),
+          ),
+          // ItemSelecter(),
         ],
       ),
     );
