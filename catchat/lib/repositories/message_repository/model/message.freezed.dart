@@ -22,6 +22,8 @@ MessageModel _$MessageModelFromJson(Map<String, dynamic> json) {
 mixin _$MessageModel {
   String get content => throw _privateConstructorUsedError;
   String get from => throw _privateConstructorUsedError;
+  String get importance => throw _privateConstructorUsedError;
+  String get tag => throw _privateConstructorUsedError;
   @TimestampConverter()
   DateTime? get sendDate => throw _privateConstructorUsedError;
   bool get isRead => throw _privateConstructorUsedError;
@@ -41,6 +43,8 @@ abstract class $MessageModelCopyWith<$Res> {
   $Res call(
       {String content,
       String from,
+      String importance,
+      String tag,
       @TimestampConverter() DateTime? sendDate,
       bool isRead});
 }
@@ -60,6 +64,8 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
   $Res call({
     Object? content = null,
     Object? from = null,
+    Object? importance = null,
+    Object? tag = null,
     Object? sendDate = freezed,
     Object? isRead = null,
   }) {
@@ -71,6 +77,14 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
       from: null == from
           ? _value.from
           : from // ignore: cast_nullable_to_non_nullable
+              as String,
+      importance: null == importance
+          ? _value.importance
+          : importance // ignore: cast_nullable_to_non_nullable
+              as String,
+      tag: null == tag
+          ? _value.tag
+          : tag // ignore: cast_nullable_to_non_nullable
               as String,
       sendDate: freezed == sendDate
           ? _value.sendDate
@@ -95,6 +109,8 @@ abstract class _$$MessageModelImplCopyWith<$Res>
   $Res call(
       {String content,
       String from,
+      String importance,
+      String tag,
       @TimestampConverter() DateTime? sendDate,
       bool isRead});
 }
@@ -112,6 +128,8 @@ class __$$MessageModelImplCopyWithImpl<$Res>
   $Res call({
     Object? content = null,
     Object? from = null,
+    Object? importance = null,
+    Object? tag = null,
     Object? sendDate = freezed,
     Object? isRead = null,
   }) {
@@ -123,6 +141,14 @@ class __$$MessageModelImplCopyWithImpl<$Res>
       from: null == from
           ? _value.from
           : from // ignore: cast_nullable_to_non_nullable
+              as String,
+      importance: null == importance
+          ? _value.importance
+          : importance // ignore: cast_nullable_to_non_nullable
+              as String,
+      tag: null == tag
+          ? _value.tag
+          : tag // ignore: cast_nullable_to_non_nullable
               as String,
       sendDate: freezed == sendDate
           ? _value.sendDate
@@ -142,6 +168,8 @@ class _$MessageModelImpl with DiagnosticableTreeMixin implements _MessageModel {
   const _$MessageModelImpl(
       {required this.content,
       required this.from,
+      this.importance = '',
+      this.tag = '',
       @TimestampConverter() this.sendDate,
       this.isRead = false});
 
@@ -153,6 +181,12 @@ class _$MessageModelImpl with DiagnosticableTreeMixin implements _MessageModel {
   @override
   final String from;
   @override
+  @JsonKey()
+  final String importance;
+  @override
+  @JsonKey()
+  final String tag;
+  @override
   @TimestampConverter()
   final DateTime? sendDate;
   @override
@@ -161,7 +195,7 @@ class _$MessageModelImpl with DiagnosticableTreeMixin implements _MessageModel {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MessageModel(content: $content, from: $from, sendDate: $sendDate, isRead: $isRead)';
+    return 'MessageModel(content: $content, from: $from, importance: $importance, tag: $tag, sendDate: $sendDate, isRead: $isRead)';
   }
 
   @override
@@ -171,6 +205,8 @@ class _$MessageModelImpl with DiagnosticableTreeMixin implements _MessageModel {
       ..add(DiagnosticsProperty('type', 'MessageModel'))
       ..add(DiagnosticsProperty('content', content))
       ..add(DiagnosticsProperty('from', from))
+      ..add(DiagnosticsProperty('importance', importance))
+      ..add(DiagnosticsProperty('tag', tag))
       ..add(DiagnosticsProperty('sendDate', sendDate))
       ..add(DiagnosticsProperty('isRead', isRead));
   }
@@ -182,6 +218,9 @@ class _$MessageModelImpl with DiagnosticableTreeMixin implements _MessageModel {
             other is _$MessageModelImpl &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.from, from) || other.from == from) &&
+            (identical(other.importance, importance) ||
+                other.importance == importance) &&
+            (identical(other.tag, tag) || other.tag == tag) &&
             (identical(other.sendDate, sendDate) ||
                 other.sendDate == sendDate) &&
             (identical(other.isRead, isRead) || other.isRead == isRead));
@@ -189,7 +228,8 @@ class _$MessageModelImpl with DiagnosticableTreeMixin implements _MessageModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, content, from, sendDate, isRead);
+  int get hashCode => Object.hash(
+      runtimeType, content, from, importance, tag, sendDate, isRead);
 
   @JsonKey(ignore: true)
   @override
@@ -209,6 +249,8 @@ abstract class _MessageModel implements MessageModel {
   const factory _MessageModel(
       {required final String content,
       required final String from,
+      final String importance,
+      final String tag,
       @TimestampConverter() final DateTime? sendDate,
       final bool isRead}) = _$MessageModelImpl;
 
@@ -219,6 +261,10 @@ abstract class _MessageModel implements MessageModel {
   String get content;
   @override
   String get from;
+  @override
+  String get importance;
+  @override
+  String get tag;
   @override
   @TimestampConverter()
   DateTime? get sendDate;

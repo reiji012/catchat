@@ -9,7 +9,7 @@ class MessageRepository {
     List<MessageModel> messages = [];
 
     // TODO: ユーザーIDを取得する
-    final userId = '1';
+    final userId = '2';
 
     try {
       await store
@@ -34,8 +34,8 @@ class MessageRepository {
     }
   }
 
-  Future<void> sendMessage(MessageModel message) async {
-    final userId = '1';
+  Future<void> sendMessageToFirestore(MessageModel message) async {
+    final userId = '2';
 
     try {
       await store

@@ -40,15 +40,33 @@ class MessageListStateNotifier extends StateNotifier<MessageListState> {
       messageList: [...state.messageList, userMessage],
     );
 
-    messageRepository.sendMessage(userMessage);
+    messageRepository.sendMessageToFirestore(userMessage);
 
-    _chatService.sendMessage(state.messageList, content).then((response) {
+    _chatService.sendMessageToGPT(state.messageList, content).then((response) {
+      final error = response['error'] ?? null;
+      if (error != null) {
+        final errorMessage = MessageModel(
+            content: error, from: 'assistant', sendDate: DateTime.now());
+        state = state.copyWith(
+          messageList: [...state.messageList, errorMessage],
+        );
+        messageRepository.sendMessageToFirestore(errorMessage);
+        return;
+      }
+
+      final importance = response['importance'] as String;
+      final tag = response['tag'] as String;
+      final conversation = response['conversation'] as String;
       final responseMessage = MessageModel(
-          content: response, from: 'assistant', sendDate: DateTime.now());
+          content: conversation,
+          from: 'assistant',
+          sendDate: DateTime.now(),
+          importance: importance,
+          tag: tag);
       state = state.copyWith(
         messageList: [...state.messageList, responseMessage],
       );
-      messageRepository.sendMessage(responseMessage);
+      messageRepository.sendMessageToFirestore(responseMessage);
     });
   }
 }

@@ -112,6 +112,7 @@ class ChatPage extends ConsumerWidget {
                                               BorderRadius.circular(30),
                                         ),
                                         child: TextField(
+                                          controller: _textEditingController,
                                           decoration: InputDecoration(
                                             hintText: 'メッセージを入力',
                                             border: InputBorder.none,

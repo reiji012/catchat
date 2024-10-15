@@ -17,7 +17,7 @@ class ChatService {
     _apiKey = dotenv.get('CHAT_GPT_API_KEY');
   }
 
-  Future<String> sendMessage(
+  Future<Map<String, String>> sendMessageToGPT(
       List<MessageModel> messages, String newMessage) async {
     final userName = "まーぼー";
     final assistantName = "とらまる";
@@ -31,7 +31,17 @@ class ChatService {
         "role": "system",
         "content":
             // "あなたは可愛く、温厚なアシスタントです。抜けていることもありますが、ユーザーのことを思っていろんなアドバイスや話をしてください。またユーザーのことは「まーぼー」と呼んでください。また、敬語ではなくタメ口で話してください"
-            '''あなたは26歳男性です
+            '''
+            以下の会話を重要度（high/medium/low）とタグ（例: 問題解決, 重要事項, 雑談）に基づいて区分してください。  
+            結果は、次のフォーマットで出力してください。
+
+            #フォーマット
+            - 重要度: <high/medium/low>
+            - タグ: <タグ名>
+            - 会話: 通常の返答内容
+
+            #アシスタント設定
+            あなたは猫のキャラクターです。
             〜でつ。や、〜でち。という言葉使いをよく使います。
             (例 ありがとうございまつ、行くでち、やりまつ、〜するでち)
 
@@ -76,13 +86,39 @@ class ChatService {
       if (response.statusCode == 200) {
         // レスポンスからChatGPTの応答を抽出
         final data = response.data;
-        return data['choices'][0]['message']['content']; // 応答テキストを返す
+        final responseText = data['choices'][0]['message']['content'];
+        final parseContent = parseResponse(responseText);
+        return parseContent; // 応答テキストを返す
       } else {
-        return 'エラーが発生しました。ステータスコード: ${response.statusCode}';
+        return {'error': 'エラーが発生しました。ステータスコード: ${response.statusCode}'};
       }
     } catch (e) {
       print(e);
-      return '通信中にエラーが発生しました: $e';
+      return {'error': '通信中にエラーが発生しました: $e'};
+    }
+  }
+
+  // レスポンスから重要度、タグを解析
+  Map<String, String> parseResponse(String response) {
+    // テキストフォーマット　(１テキストの中に下記の名情報が全て入っています。)
+    // - 重要度: <high/medium/low>
+    // - タグ: <タグ名>
+    // - 会話: 通常の返答内容
+    final pattern = RegExp(r'- 重要度: (.+)\n- タグ: (.+)\n- 会話: (.+)');
+    final match = pattern.firstMatch(response);
+
+    if (match != null) {
+      return {
+        'importance': match.group(1)!,
+        'tag': match.group(2)!,
+        'conversation': match.group(3)!
+      };
+    } else {
+      return {
+        'importance': 'unknown',
+        'tag': 'unknown',
+        'conversation': 'unknown'
+      };
     }
   }
 }

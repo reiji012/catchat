@@ -9,6 +9,8 @@ class MessageModel with _$MessageModel {
   const factory MessageModel({
     required String content,
     required String from,
+    @Default('') String importance,
+    @Default('') String tag,
     @TimestampConverter() DateTime? sendDate,
     @Default(false) bool isRead,
   }) = _MessageModel;
