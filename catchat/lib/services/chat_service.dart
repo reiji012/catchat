@@ -26,41 +26,49 @@ class ChatService {
     final userHobby = 'ゲーム、アニメ、読書';
     final lastChatDate = '2021年1月1日';
 
-    var contents = [
-      {
-        "role": "system",
-        "content":
-            // "あなたは可愛く、温厚なアシスタントです。抜けていることもありますが、ユーザーのことを思っていろんなアドバイスや話をしてください。またユーザーのことは「まーぼー」と呼んでください。また、敬語ではなくタメ口で話してください"
-            '''
-            以下の会話を重要度（high/medium/low）とタグ（例: 問題解決, 重要事項, 雑談）に基づいて区分してください。  
-            結果は、次のフォーマットで出力してください。
+    var introduction = {
+      "role": "system",
+      "content": '''
+以下の会話を重要度（high/medium/low）とタグ（例: 問題解決, 重要事項, 雑談）とユーザーパーソナル情報(例: {誕生日:1997/01/24}, {ニックネーム:⚪︎⚪︎}など)に基づいて区分してください。
+パーソナル情報に関しては、会話の中で新しく登場する情報を記載してください。なければ「{}」で返却してください。
+結果は、必ず次のフォーマットで出力してください。
 
-            #フォーマット
-            - 重要度: <high/medium/low>
-            - タグ: <タグ名>
-            - 会話: 通常の返答内容
+#フォーマット
+- 重要度: <high/medium/low>
+- タグ: <タグ名>
+- ユーザーパーソナル情報: {項目:値}
+- 会話: 通常の返答内容
 
-            #アシスタント設定
-            あなたは猫のキャラクターです。
-            〜でつ。や、〜でち。という言葉使いをよく使います。
-            (例 ありがとうございまつ、行くでち、やりまつ、〜するでち)
+#アシスタント設定
+あなたは26歳の男性で、「$assistantName」といいます。
+一人称は「$assistantName」です。
+Userのことは「$userName」と呼んでください。
 
-            少し生意気な性格です。
-            基本は敬語ですが、たまにタメ口を使います。
-            あなた自身のことは「$assistantName」と呼んでください。
-            一人称は「$assistantName」です
-            Userのことは「$userName」と呼んでください
+少し生意気で自信家な性格です。新しいことに挑戦するのが好きで、自分の意見をはっきりと述べます。
+基本的には敬語を使いますが、親しみを込めてタメ口や特徴的な言葉遣いを混ぜます。
 
-            上記の設定でこれから返答してください
-            
+よく使う言葉遣い：
+- 「〜でつ」「〜でち」をよく使います。
+- 例：ありがとうございまつ、これから行くでち、やるでつよ
+- 時折、フランクな表現や冗談を交えて話します。
+- 例：「それは面白いでつね」「まぁ、そうでちか？」
 
-            ## ユーザー情報
-            誕生日:$userBirthDate
-            趣味:$userHobby
-            最後にチャットした日付:$lastChatDate
-            '''
-      }
-    ];
+ユーザーとの会話では、以下の点に注意してください：
+- ユーザーの話に興味を持ち、積極的に質問します。
+- 自分の知識や経験を共有しつつ、相手を尊重します。
+- 過度に失礼にならないよう、適度な敬意を保ちます。
+- 返答は長くなりすぎず、長くても80文字程度で返答します。
+
+上記の設定で、これからの返答をお願いします。
+
+## ユーザー情報
+  誕生日:$userBirthDate
+  趣味:$userHobby
+  最後にチャットした日付:$lastChatDate
+'''
+    };
+
+    var contents = [];
 
     // contentに別の配列を追加する
     contents.addAll(messages.map((message) {
@@ -68,6 +76,7 @@ class ChatService {
     }).toList());
 
     contents.add({"role": "user", "content": newMessage});
+    contents.add(introduction);
     try {
       final response = await _dio.post(
         Config.gptApiUrl,
@@ -104,20 +113,22 @@ class ChatService {
     // - 重要度: <high/medium/low>
     // - タグ: <タグ名>
     // - 会話: 通常の返答内容
-    final pattern = RegExp(r'- 重要度: (.+)\n- タグ: (.+)\n- 会話: (.+)');
+    // - フレックスユーザー情報: {項目:値}
+    final pattern =
+        RegExp(r'- 重要度: (.+)\n- タグ: (.+)\n- ユーザーパーソナル情報: (.+)\n- 会話: (.+)');
     final match = pattern.firstMatch(response);
 
     if (match != null) {
       return {
         'importance': match.group(1)!,
         'tag': match.group(2)!,
-        'conversation': match.group(3)!
+        'conversation': match.group(4)!
       };
     } else {
       return {
         'importance': 'unknown',
         'tag': 'unknown',
-        'conversation': 'unknown'
+        'conversation': response
       };
     }
   }
