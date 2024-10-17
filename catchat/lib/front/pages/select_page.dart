@@ -1,13 +1,18 @@
+import 'package:catchat/state/cat/cat_state.dart';
+import 'package:catchat/state/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SelectPage extends StatelessWidget {
+class SelectPage extends ConsumerWidget {
   const SelectPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final CatState catState = ref.watch(catStateNotifierProvider);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('とらまる'),
+        title: Text(catState.name),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -20,7 +25,7 @@ class SelectPage extends StatelessWidget {
                 image: DecorationImage(
                   fit: BoxFit.fitHeight,
                   image: AssetImage(
-                    'assets/images/cats/cat9.png',
+                    catState.imageUrl,
                   ), // 画像のパスを指定
                 ),
                 borderRadius: BorderRadius.circular(10.0),

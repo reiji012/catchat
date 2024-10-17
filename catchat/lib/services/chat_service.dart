@@ -122,10 +122,12 @@ Userのことは「$userName」と呼んでください。
       return {
         'importance': match.group(1)!,
         'tag': match.group(2)!,
-        'conversation': match.group(4)!
+        'conversation': match.group(4)!,
+        'personalInfo': match.group(3)!
       };
     } else {
       return {
+        'error': 'ChatGPTの応答を解析できませんでした',
         'importance': 'unknown',
         'tag': 'unknown',
         'conversation': response

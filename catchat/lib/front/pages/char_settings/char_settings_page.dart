@@ -1,7 +1,9 @@
+import 'package:catchat/front/pages/char_settings/widets/char_memory_list.dart';
 import 'package:catchat/front/pages/char_settings/widets/item_selecter.dart';
 import 'package:catchat/front/pages/char_settings/widets/visual_selecter.dart';
 import 'package:catchat/front/theme/theme_color.dart';
 import 'package:catchat/repositories/message_repository/model/message.dart';
+import 'package:catchat/state/cat/cat_state.dart';
 import 'package:catchat/state/massage_list/message_list_state.dart';
 import 'package:catchat/state/providers.dart';
 import 'package:flutter/material.dart';
@@ -30,11 +32,12 @@ class _CharSettingsPageState extends ConsumerState<CharSettingsPage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final CatState catState = ref.watch(catStateNotifierProvider);
 
     TextEditingController _textEditingController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
-        title: Text('とらまる'),
+        title: Text(catState.name),
       ),
       backgroundColor: Color(NyatColors.backgroundColor),
       body: Column(
@@ -48,7 +51,7 @@ class _CharSettingsPageState extends ConsumerState<CharSettingsPage> {
                 image: DecorationImage(
                   fit: BoxFit.fitHeight,
                   image: AssetImage(
-                    'assets/images/cats/cat2.png',
+                    catState.imageUrl,
                   ), // 画像のパスを指定
                 ),
                 borderRadius: BorderRadius.circular(10.0),
@@ -60,12 +63,29 @@ class _CharSettingsPageState extends ConsumerState<CharSettingsPage> {
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 50.0),
-            child: TextField(
-              controller: _textEditingController,
-              decoration: InputDecoration(
-                label: Text('とらまる'),
-                hintText: 'ニックネームを入力してください',
-              ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _textEditingController,
+                    decoration: InputDecoration(
+                      label: Text(catState.name),
+                      hintText: 'ニックネームを入力してください',
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 80,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      ref.read(catStateNotifierProvider.notifier).changeName(
+                            _textEditingController.text,
+                          );
+                    },
+                    child: Text('変更'),
+                  ),
+                ),
+              ],
             ),
           ),
           Container(
@@ -133,7 +153,36 @@ class _CharSettingsPageState extends ConsumerState<CharSettingsPage> {
               child: Text('性格を変える'),
             ),
           ),
-          // ItemSelecter(),
+          Container(
+            width: 200,
+            child: ElevatedButton(
+              onPressed: () {
+                // 決定ボタンの処理をここに書く
+                showModalBottomSheet(
+                    //モーダルの背景の色、透過
+                    backgroundColor: Colors.transparent,
+                    //ドラッグ可能にする（高さもハーフサイズからフルサイズになる様子）
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Container(
+                        margin: EdgeInsets.only(top: 64),
+                        decoration: BoxDecoration(
+                          //モーダル自体の色
+                          color: Colors.white,
+                          //角丸にする
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        child: CharMemoryList(),
+                      );
+                    });
+              },
+              child: Text('とらまるが覚えたあなたのこと'),
+            ),
+          ),
         ],
       ),
     );

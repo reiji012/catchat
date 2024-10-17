@@ -1,5 +1,6 @@
 import 'package:catchat/front/theme/theme_color.dart';
 import 'package:catchat/repositories/message_repository/model/message.dart';
+import 'package:catchat/state/cat/cat_state.dart';
 import 'package:catchat/state/massage_list/message_list_state.dart';
 import 'package:catchat/state/providers.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class ChatPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final MessageListState messageListState =
         ref.watch(messageListStateNotifierProvider);
+
     final isLoading = messageListState.isLoading;
     final messages = messageListState.messageList;
     TextEditingController _textEditingController = TextEditingController();
@@ -94,7 +96,9 @@ class ChatPage extends ConsumerWidget {
                                   itemBuilder: (context, index) {
                                     final message = messages[index];
                                     return buildMessageTile(
-                                        message); // メッセージタイルを構築するメソッド
+                                      message,
+                                      ref,
+                                    ); // メッセージタイルを構築するメソッド
                                   },
                                 ),
                               ),
@@ -168,14 +172,15 @@ class ChatPage extends ConsumerWidget {
     );
   }
 
-  Widget buildMessageTile(MessageModel message) {
+  Widget buildMessageTile(MessageModel message, WidgetRef ref) {
+    final CatState catState = ref.watch(catStateNotifierProvider);
     return ListTile(
       leading: message.from == "user"
           ? null
           : CircleAvatar(
               child: ClipOval(
                 child: Image.asset(
-                  "assets/images/cats/cat2.png",
+                  catState.imageUrl,
                   fit: BoxFit.fill,
                   width: 100.0, // CircleAvatarのサイズに合わせる
                   height: 100.0, // CircleAvatarのサイズに合わせる

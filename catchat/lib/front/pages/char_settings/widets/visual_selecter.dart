@@ -1,3 +1,4 @@
+import 'package:catchat/state/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,6 +12,7 @@ class VisualSelecter extends ConsumerStatefulWidget {
 class _VisualSelecterState extends ConsumerState<VisualSelecter> {
   @override
   Widget build(BuildContext context) {
+    var pageController = PageController(viewportFraction: 0.5);
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -19,7 +21,7 @@ class _VisualSelecterState extends ConsumerState<VisualSelecter> {
           height: 200.0, // 画像の高さに合わせて調整
           // PageView.builderを使用
           child: PageView.builder(
-            controller: PageController(viewportFraction: 0.5), // 画像が中央に来るように調整
+            controller: pageController, // 画像が中央に来るように調整
             itemCount: 9, // 画像の数
             itemBuilder: (context, index) {
               return Container(
@@ -40,7 +42,11 @@ class _VisualSelecterState extends ConsumerState<VisualSelecter> {
         ElevatedButton(
           onPressed: () {
             // 決定ボタンの処理をここに書く
-            Navigator.pushNamed(context, '/char_settings');
+            ref.read(catStateNotifierProvider.notifier).changeImageUrl(
+                'assets/images/cats/cat${pageController.page!.round() + 1}.png');
+
+            // ページを閉じる
+            Navigator.pop(context);
           },
           child: Text('決定'),
         ),
