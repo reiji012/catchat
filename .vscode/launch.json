@@ -5,17 +5,27 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "catchat",
+            "name": "catchat debug",
             "cwd": "catchat",
             "request": "launch",
             "type": "dart",
             "program": "lib/main.dart",
             "args": [
-                // "--debug",
+                "--debug",
                 // "--flavor",
                 // "development",
                 // "--dart-define=app.flavor=development",
                 // "--no-sound-null-safety"
+            ]
+        },
+        {
+            "name": "catchat profile",
+            "cwd": "catchat",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": [
+                "--profile",
             ]
         },
     ]
