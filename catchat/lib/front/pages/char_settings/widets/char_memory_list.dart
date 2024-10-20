@@ -1,3 +1,5 @@
+import 'package:catchat/front/theme/theme_color.dart';
+import 'package:catchat/state/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,59 +13,26 @@ class CharMemoryList extends ConsumerStatefulWidget {
 class _CharMemoryListState extends ConsumerState<CharMemoryList> {
   @override
   Widget build(BuildContext context) {
-    var memoryList = [
-      {
-        'content': 'ニックネーム',
-        'value': 'まーぼー',
-      },
-      {
-        'content': '性別',
-        'value': '男',
-      },
-      {
-        'content': '年齢',
-        'value': '20代',
-      },
-      {
-        'content': '趣味',
-        'value': 'プログラミング',
-      },
-      {
-        'content': '好きな食べ物',
-        'value': 'ラーメン',
-      },
-      {
-        'content': '好きなアニメ',
-        'value': '鬼滅の刃',
-      },
-      {
-        'content': '好きなゲーム',
-        'value': 'モンスターハンター',
-      },
-      {
-        'content': '好きな映画',
-        'value': 'ハリーポッター',
-      },
-      {
-        'content': '好きな音楽',
-        'value': 'J-POP',
-      },
-    ];
+    final user = ref.watch(userStateNotifierProvider);
+    var memoryList = user.userInfo;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: memoryList.map((memory) {
-        return Container(
-          margin: EdgeInsets.symmetric(horizontal: 10.0), // 画像間のマージン
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(memory['content']!),
-              Text(memory['value']!),
-            ],
-          ),
-        );
-      }).toList(),
+    return Container(
+      color: Color(NyatColors.backgroundColor),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: memoryList.entries.map((entry) {
+          return Container(
+            margin: EdgeInsets.symmetric(horizontal: 10.0), // 画像間のマージン
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(entry.value['content'] ?? ''),
+                Text(entry.value['value'] ?? ''),
+              ],
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 }

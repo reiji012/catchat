@@ -136,12 +136,18 @@ class ChatPage extends ConsumerWidget {
                                         icon: Icon(Icons.send,
                                             color: Colors.white),
                                         onPressed: () {
+                                          final userId = ref
+                                              .read(userStateNotifierProvider)
+                                              .userId;
                                           ref
                                               .read(
                                                   messageListStateNotifierProvider
                                                       .notifier)
                                               .sendMessage(
-                                                  _textEditingController.text);
+                                                  userId: userId,
+                                                  content:
+                                                      _textEditingController
+                                                          .text);
                                           _textEditingController.clear();
                                           // きーぼーどを閉じる
                                           FocusScope.of(context).unfocus();

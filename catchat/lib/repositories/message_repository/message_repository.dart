@@ -5,11 +5,8 @@ import 'model/message.dart';
 class MessageRepository {
   final FirebaseFirestore store = FirebaseFirestore.instance;
 
-  Future<List<MessageModel>?> getMessages() async {
+  Future<List<MessageModel>?> getMessages({required String userId}) async {
     List<MessageModel> messages = [];
-
-    // TODO: ユーザーIDを取得する
-    final userId = '2';
 
     try {
       await store
@@ -34,7 +31,8 @@ class MessageRepository {
     }
   }
 
-  Future<void> sendMessageToFirestore(MessageModel message) async {
+  Future<void> sendMessageToFirestore(
+      {required String userId, required MessageModel message}) async {
     final userId = '2';
 
     try {

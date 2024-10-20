@@ -14,7 +14,7 @@
                 "--debug",
                 // "--flavor",
                 // "development",
-                // "--dart-define=app.flavor=development",
+                // "--dart-define=app.flavor=develおおしゃopment",
                 // "--no-sound-null-safety"
             ]
         },

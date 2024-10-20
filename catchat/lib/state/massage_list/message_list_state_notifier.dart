@@ -11,17 +11,21 @@ class MessageListStateNotifier extends StateNotifier<MessageListState> {
   final ChatService _chatService = ChatService();
 
   void init() async {
+    // TODO: userIdを取得する
+    final userId = '2';
     messageRepository = MessageRepository();
-    final List<MessageModel>? messages = await messageRepository.getMessages();
+    final List<MessageModel>? messages =
+        await messageRepository.getMessages(userId: userId);
     state = state.copyWith(messageList: messages ?? [], isLoading: false);
   }
 
-  void fetchMessages() async {
-    final List<MessageModel>? messages = await messageRepository.getMessages();
+  void fetchMessages({required String userId}) async {
+    final List<MessageModel>? messages =
+        await messageRepository.getMessages(userId: userId);
     state = state.copyWith(messageList: messages ?? []);
   }
 
-  void readMessage(int index) async {
+  void readMessage({required String userId, required int index}) async {
     var message = state.messageList[index];
     state = state.copyWith(
       messageList: [
@@ -30,17 +34,18 @@ class MessageListStateNotifier extends StateNotifier<MessageListState> {
         ...state.messageList.sublist(index + 1),
       ],
     );
-    fetchMessages();
+    fetchMessages(userId: userId);
   }
 
-  void sendMessage(String content) {
+  void sendMessage({required String userId, required String content}) {
     final userMessage =
         MessageModel(content: content, from: 'user', sendDate: DateTime.now());
     state = state.copyWith(
       messageList: [...state.messageList, userMessage],
     );
 
-    messageRepository.sendMessageToFirestore(userMessage);
+    messageRepository.sendMessageToFirestore(
+        userId: userId, message: userMessage);
 
     _chatService.sendMessageToGPT(state.messageList, content).then((response) {
       final error = response['error'] ?? null;
@@ -50,7 +55,8 @@ class MessageListStateNotifier extends StateNotifier<MessageListState> {
         state = state.copyWith(
           messageList: [...state.messageList, errorMessage],
         );
-        messageRepository.sendMessageToFirestore(errorMessage);
+        messageRepository.sendMessageToFirestore(
+            userId: userId, message: errorMessage);
         return;
       }
 
@@ -67,7 +73,8 @@ class MessageListStateNotifier extends StateNotifier<MessageListState> {
       state = state.copyWith(
         messageList: [...state.messageList, responseMessage],
       );
-      messageRepository.sendMessageToFirestore(responseMessage);
+      messageRepository.sendMessageToFirestore(
+          userId: userId, message: responseMessage);
     });
   }
 }
