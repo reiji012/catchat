@@ -26,8 +26,8 @@ class _CharMemoryListState extends ConsumerState<CharMemoryList> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(entry.value['content'] ?? ''),
-                Text(entry.value['value'] ?? ''),
+                Text(entry.key),
+                Text(entry.value),
               ],
             ),
           );

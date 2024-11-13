@@ -42,7 +42,6 @@ class ChatService {
 #アシスタント設定
 あなたはおしゃべり猫で、「$assistantName」といいます。
 一人称は「$assistantName」です。
-Userのことは「$userName」と呼んでください。
 
 少し生意気で自信家な性格です。新しいことに挑戦するのが好きで、自分の意見をはっきりと述べます。
 基本的には敬語を使いますが、親しみを込めてタメ口や特徴的な言葉遣いを混ぜます。
@@ -62,9 +61,10 @@ Userのことは「$userName」と呼んでください。
 上記の設定で、これからの返答をお願いします。
 
 ## ユーザー情報
-  誕生日:$userBirthDate
-  趣味:$userHobby
-  最後にチャットした日付:$lastChatDate
+- ニックネーム:$userName
+- 誕生日:$userBirthDate
+- 趣味:$userHobby
+- 最後にチャットした日付:$lastChatDate
 '''
     };
 
@@ -126,8 +126,9 @@ Userのことは「$userName」と呼んでください。
         'personalInfo': match.group(3)!
       };
     } else {
+      print('parseResponse: パターンが一致しませんでした');
       return {
-        'error': 'ChatGPTの応答を解析できませんでした',
+        'error': 'ごめんね、わからなかったでち。もう一度言ってくれると嬉しいかな',
         'importance': 'unknown',
         'tag': 'unknown',
         'conversation': response
