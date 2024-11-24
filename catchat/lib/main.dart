@@ -1,3 +1,4 @@
+import 'package:catchat/front/pages/app_settings/app_settings_page.dart';
 import 'package:catchat/front/pages/char_settings/char_settings_page.dart';
 import 'package:catchat/front/pages/chat_page/chat_page.dart';
 import 'package:catchat/front/theme/theme_color.dart';
@@ -40,8 +41,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/select': (context) => const SelectPage(), // SelectPageへのルートを定義
         '/chat': (context) => ChatPage(), // ChatPageへのルートを定義
-        '/char_settings': (context) =>
-            CharSettingsPage(), // CharSettingsPageへのルートを定義
+        '/char_settings': (context) => CharSettingsPage(),
+        '/app_settings': (context) => AppSettingsPage(),
       },
     );
   }

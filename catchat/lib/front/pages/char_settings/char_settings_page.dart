@@ -180,7 +180,7 @@ class _CharSettingsPageState extends ConsumerState<CharSettingsPage> {
                       );
                     });
               },
-              child: Text('とらまるが覚えたあなたのこと'),
+              child: Text('あなたとの思い出'),
             ),
           ),
         ],

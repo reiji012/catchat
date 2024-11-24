@@ -23,8 +23,12 @@ mixin _$MessageListState {
   List<MessageModel> get messageList => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
 
+  /// Serializes this MessageListState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MessageListState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MessageListStateCopyWith<MessageListState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +52,8 @@ class _$MessageListStateCopyWithImpl<$Res, $Val extends MessageListState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of MessageListState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -86,6 +92,8 @@ class __$$MessageListStateImplCopyWithImpl<$Res>
       $Res Function(_$MessageListStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MessageListState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -154,12 +162,14 @@ class _$MessageListStateImpl
                 other.isLoading == isLoading));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType,
       const DeepCollectionEquality().hash(_messageList), isLoading);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MessageListState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MessageListStateImplCopyWith<_$MessageListStateImpl> get copyWith =>
@@ -186,8 +196,11 @@ abstract class _MessageListState implements MessageListState {
   List<MessageModel> get messageList;
   @override
   bool get isLoading;
+
+  /// Create a copy of MessageListState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MessageListStateImplCopyWith<_$MessageListStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

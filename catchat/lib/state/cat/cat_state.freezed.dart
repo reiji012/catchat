@@ -24,8 +24,12 @@ mixin _$CatState {
   String get imageUrl => throw _privateConstructorUsedError;
   String get personalityType => throw _privateConstructorUsedError;
 
+  /// Serializes this CatState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CatState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CatStateCopyWith<CatState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +52,8 @@ class _$CatStateCopyWithImpl<$Res, $Val extends CatState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CatState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -91,6 +97,8 @@ class __$$CatStateImplCopyWithImpl<$Res>
       _$CatStateImpl _value, $Res Function(_$CatStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CatState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -160,11 +168,13 @@ class _$CatStateImpl with DiagnosticableTreeMixin implements _CatState {
                 other.personalityType == personalityType));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, imageUrl, personalityType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CatState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CatStateImplCopyWith<_$CatStateImpl> get copyWith =>
@@ -193,8 +203,11 @@ abstract class _CatState implements CatState {
   String get imageUrl;
   @override
   String get personalityType;
+
+  /// Create a copy of CatState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CatStateImplCopyWith<_$CatStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

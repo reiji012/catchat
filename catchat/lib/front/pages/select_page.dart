@@ -13,6 +13,15 @@ class SelectPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(catState.name),
+        // 設定ボタン
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.pushNamed(context, '/app_settings');
+            },
+          ),
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

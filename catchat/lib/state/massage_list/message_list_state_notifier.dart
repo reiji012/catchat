@@ -63,6 +63,7 @@ class MessageListStateNotifier extends StateNotifier<MessageListState> {
       final importance = response['importance'] as String;
       final tag = response['tag'] as String;
       final conversation = response['conversation'] as String;
+      print('personalInfo: $response');
       // final personalInfo = response['personalInfo'] as Map<String, dynamic>;
       final responseMessage = MessageModel(
           content: conversation,

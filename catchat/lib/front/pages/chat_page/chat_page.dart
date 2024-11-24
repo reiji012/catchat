@@ -14,7 +14,7 @@ class ChatPage extends ConsumerWidget {
   ChatPage({super.key});
 
   void _scrollToBottom() {
-    _scrollController.jumpTo(_scrollController.position.maxScrollExtent - 5);
+    _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
   }
 
   @override

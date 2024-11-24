@@ -17,21 +17,71 @@ class _CharMemoryListState extends ConsumerState<CharMemoryList> {
     var memoryList = user.userInfo;
 
     return Container(
-      color: Color(NyatColors.backgroundColor),
+      decoration: BoxDecoration(
+        color: Color(NyatColors.backgroundColor),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+      ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: memoryList.entries.map((entry) {
-          return Container(
-            margin: EdgeInsets.symmetric(horizontal: 10.0), // 画像間のマージン
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(entry.key),
-                Text(entry.value),
-              ],
+        children: [
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            child: Text(
+              'あなたとの思い出',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-          );
-        }).toList(),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Column(
+            children: memoryList.entries.map((entry) {
+              return ProfileField(title: entry.key, initialValue: entry.value);
+            }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ProfileField extends StatelessWidget {
+  final String title;
+  final String initialValue;
+
+  const ProfileField({
+    required this.title,
+    required this.initialValue,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: TextField(
+              controller: TextEditingController(text: initialValue),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                isDense: true,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
